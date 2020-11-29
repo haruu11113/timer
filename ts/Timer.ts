@@ -13,21 +13,21 @@ export class Timer {
     public minute: number;
     public second: number;
     public workTimer: NodeJS.Timer | null;
-
     constructor (minute: number) {
         this.startAt = new Date(); 
         this.finishAt = new Date(); 
         this.finishAt.setMinutes(this.finishAt.getMinutes() + minute);
-
         this.minute = minute;
         this.second = 0;
         this.workTimer = null;
     }
-    
-    // getClock(): string {
-    //     return `${this.}:${this.minute}:${this.second}`;
-    // }
 
+    updateFinishAt(minute: number): void{
+        let now: Date = new Date();
+        this.finishAt.setMinutes(now.getMinutes() + minute);
+        this.minute = minute;
+        this.second = 0;
+    }
     startWork(): void {
         this.workTimer = setInterval(() => {
             let timerMinuteElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerMinute');
