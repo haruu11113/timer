@@ -84,8 +84,6 @@ var Timer = /** @class */ (function () {
         timerSecondElem.innerText = ' : ' + String(this.second);
     };
     Timer.prototype.makePushPermission = function () {
-        // Push.Permission.request(this.onGranted, this.onDenied);
-        // Push.Permission.request();
         push_js_1.default.create("Hello world!", {
             body: "How's it hangin'?",
             // icon: 'icon.png',
