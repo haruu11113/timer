@@ -34,7 +34,6 @@ export class Timer {
             let timerSecondElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerSecond');
 
             if (this.minute == 0 && this.second==0 ){
-                console.log('ofawwaw');
                 this.stopWork();
             } else if (this.second == 0){
                 this.minute -= 1;
@@ -44,7 +43,7 @@ export class Timer {
             }
 
             timerMinuteElem.innerText = String(this.minute);
-            timerSecondElem.innerText = String(this.second);
+            timerSecondElem.innerText = ' : ' + String(this.second);
         },1000);
     }
 
