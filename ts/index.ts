@@ -20,8 +20,21 @@ import { Timer } from "./Timer";
 
 // const timer: Timer = new Timer();
 // const contentsElem: HTMLInputElement = <HTMLInputElement>document.getElementById('contents');
-setInterval(() => {
-    const timer: Timer = new Timer();
-    const contentsElem: HTMLInputElement = <HTMLInputElement>document.getElementById('contents');
-    contentsElem.innerText = `${timer.hour} ${timer.minute} ${timer.second}`;
-},1000);
+// setInterval(() => {
+//     let timer: Timer = new Timer();
+//     let contentsElem: HTMLInputElement = <HTMLInputElement>document.getElementById('clock');
+//     contentsElem.innerText = timer.getClock(); 
+// },1000);
+
+
+var startbutton: HTMLInputElement = <HTMLInputElement>document.getElementById("start");
+startbutton.addEventListener('click', () => {
+
+    let timerElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timer');
+    let minuteFormElem: HTMLInputElement = <HTMLInputElement>document.getElementById('minute');
+    let timer: Timer = new Timer(parseInt(minuteFormElem.value));
+    timer.start();
+
+    timerElem.innerText = String(timer.finishAt);
+});
+
