@@ -1,25 +1,17 @@
 export class Timer {
-    // public age: number;
-    // public familyName: string;
-    // public givenName: string;
-    // constructor (familyName: string, givenName: string, age: number) {
-    //     this.age = age;
-    //     this.familyName = familyName;
-    //     this.givenName = givenName;
-    // }
-
-    public startAt: Date;
+    // public startAt: Date;
     public finishAt: Date;
     public minute: number;
     public second: number;
-    public workTimer: NodeJS.Timer | null;
+    public timerInterval: NodeJS.Timer | null;
+
     constructor (minute: number) {
-        this.startAt = new Date(); 
+        // this.startAt = new Date(); 
         this.finishAt = new Date(); 
         this.finishAt.setMinutes(this.finishAt.getMinutes() + minute);
         this.minute = minute;
         this.second = 0;
-        this.workTimer = null;
+        this.timerInterval = null;
     }
 
     updateFinishAt(minute: number): void{
@@ -28,13 +20,15 @@ export class Timer {
         this.minute = minute;
         this.second = 0;
     }
+
     startWork(): void {
-        this.workTimer = setInterval(() => {
+        this.timerInterval = setInterval(() => {
             let timerMinuteElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerMinute');
             let timerSecondElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerSecond');
 
             if (this.minute == 0 && this.second==0 ){
-                this.stopWork();
+                this.stopTimer();
+                alert('Break!!!')
             } else if (this.second == 0){
                 this.minute -= 1;
                 this.second = 59;
@@ -47,9 +41,46 @@ export class Timer {
         },1000);
     }
 
-    stopWork(): void{
-        if (this.workTimer) {
-            clearInterval(this.workTimer);
+    startBreak(): void {
+        this.timerInterval = setInterval(() => {
+            let timerMinuteElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerMinute');
+            let timerSecondElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerSecond');
+
+            if (this.minute == 0 && this.second==0 ){
+                this.stopTimer();
+                alert('Break!!!')
+            } else if (this.second == 0){
+                this.minute -= 1;
+                this.second = 59;
+            }else {
+                this.second -= 1;
+            }
+
+            timerMinuteElem.innerText = String(this.minute);
+            timerSecondElem.innerText = ' : ' + String(this.second);
+        },1000);
+
+    }
+
+    stopTimer(): void{
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
         }
+    }
+
+    setTimer(minute: number, stateName: string): void {
+        console.log('settimer');
+        let startButtonElem: HTMLElement = <HTMLElement>document.getElementById('startButton');
+        startButtonElem.innerText = stateName;
+
+        this.updateFinishAt(minute);
+
+        let timerElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timer');
+        timerElem.innerText = String(this.finishAt.getHours()) + ' : ' + String(this.finishAt.getMinutes()) + ' : ' + String(this.finishAt.getSeconds());
+
+        let timerMinuteElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerMinute');
+        let timerSecondElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerSecond');
+        timerMinuteElem.innerText = String(this.minute);
+        timerSecondElem.innerText = ' : ' + String(this.second);
     }
 }
