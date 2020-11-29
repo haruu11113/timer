@@ -33,7 +33,7 @@ startbutton.addEventListener('click', () => {
     let timerElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timer');
     let minuteFormElem: HTMLInputElement = <HTMLInputElement>document.getElementById('minute');
     let timer: Timer = new Timer(parseInt(minuteFormElem.value));
-    timer.start();
+    timer.startWork();
 
     timerElem.innerText = String(timer.finishAt);
 });

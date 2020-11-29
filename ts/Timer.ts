@@ -12,6 +12,7 @@ export class Timer {
     public finishAt: Date;
     public minute: number;
     public second: number;
+    public workTimer: NodeJS.Timer | null;
 
     constructor (minute: number) {
         this.startAt = new Date(); 
@@ -20,22 +21,21 @@ export class Timer {
 
         this.minute = minute;
         this.second = 0;
+        this.workTimer = null;
     }
     
     // getClock(): string {
     //     return `${this.}:${this.minute}:${this.second}`;
     // }
 
-    start(): void {
-        setInterval(() => {
+    startWork(): void {
+        this.workTimer = setInterval(() => {
             let timerMinuteElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerMinute');
             let timerSecondElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerSecond');
 
-            // let now: Date = new Date();
-            // timerMinuteElem.innerText = String(this.finishAt.getMinutes() - now.getMinutes());
-            // timerSecondElem.innerText = String(this.finishAt.getSeconds() - now.getSeconds());
             if (this.minute == 0 && this.second==0 ){
                 console.log('ofawwaw');
+                this.stopWork();
             } else if (this.second == 0){
                 this.minute -= 1;
                 this.second = 59;
@@ -46,5 +46,11 @@ export class Timer {
             timerMinuteElem.innerText = String(this.minute);
             timerSecondElem.innerText = String(this.second);
         },1000);
+    }
+
+    stopWork(): void{
+        if (this.workTimer) {
+            clearInterval(this.workTimer);
+        }
     }
 }
