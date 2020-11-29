@@ -8,27 +8,43 @@ export class Timer {
     //     this.givenName = givenName;
     // }
 
-    public today:Date;
-    public month:number;
-    public date:number;
-    public hour:number;
-    public minute:number;
-    public second:number;
+    public startAt: Date;
+    public finishAt: Date;
+    public minute: number;
+    public second: number;
 
-    constructor () {
-        this.today = new Date(); 
-        this.month = this.today.getMonth();
-        this.date = this.today.getDate();
-        this.hour = this.today.getHours();
-        this.minute = this.today.getMinutes();
-        this.second = this.today.getSeconds();
+    constructor (minute: number) {
+        this.startAt = new Date(); 
+        this.finishAt = new Date(); 
+        this.finishAt.setMinutes(this.finishAt.getMinutes() + minute);
+
+        this.minute = minute;
+        this.second = 0;
     }
     
-    showClock(): void {
-        let contentsElem: HTMLInputElement = <HTMLInputElement>document.getElementById('contents');
-        contentsElem.innerText = `${this.hour} ${this.minute} ${this.second}`;
-    }
-    // function getTime(): number {
-    //     return this.date;
+    // getClock(): string {
+    //     return `${this.}:${this.minute}:${this.second}`;
     // }
+
+    start(): void {
+        setInterval(() => {
+            let timerMinuteElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerMinute');
+            let timerSecondElem: HTMLInputElement = <HTMLInputElement>document.getElementById('timerSecond');
+
+            // let now: Date = new Date();
+            // timerMinuteElem.innerText = String(this.finishAt.getMinutes() - now.getMinutes());
+            // timerSecondElem.innerText = String(this.finishAt.getSeconds() - now.getSeconds());
+            if (this.minute == 0 && this.second==0 ){
+                console.log('ofawwaw');
+            } else if (this.second == 0){
+                this.minute -= 1;
+                this.second = 59;
+            }else {
+                this.second -= 1;
+            }
+
+            timerMinuteElem.innerText = String(this.minute);
+            timerSecondElem.innerText = String(this.second);
+        },1000);
+    }
 }
