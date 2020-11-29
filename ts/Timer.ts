@@ -1,17 +1,19 @@
+import Push from 'push.js';
 export class Timer {
-    // public startAt: Date;
     public finishAt: Date;
     public minute: number;
     public second: number;
     public timerInterval: NodeJS.Timer | null;
+    public isPush: boolean;
 
     constructor (minute: number) {
-        // this.startAt = new Date(); 
         this.finishAt = new Date(); 
         this.finishAt.setMinutes(this.finishAt.getMinutes() + minute);
         this.minute = minute;
         this.second = 0;
         this.timerInterval = null;
+        this.isPush = false;
+        this.makePushPermission();
     }
 
     updateFinishAt(minute: number): void{
@@ -28,7 +30,16 @@ export class Timer {
 
             if (this.minute == 0 && this.second==0 ){
                 this.stopTimer();
-                alert('Break!!!')
+                // alert('Break!!!')
+                    Push.create("Hello world!", {
+                        body: "How's it hangin'?",
+                        // icon: 'icon.png',
+                        timeout: 4000,
+                        // onClick: function () {
+                        //     window.focus();
+                        //     // this.close();
+                        // }
+                    });
             } else if (this.second == 0){
                 this.minute -= 1;
                 this.second = 59;
@@ -50,7 +61,7 @@ export class Timer {
                 this.stopTimer();
                 alert('Break!!!')
             } else if (this.second == 0){
-                this.minute -= 1;
+               this.minute -= 1;
                 this.second = 59;
             }else {
                 this.second -= 1;
@@ -83,4 +94,18 @@ export class Timer {
         timerMinuteElem.innerText = String(this.minute);
         timerSecondElem.innerText = ' : ' + String(this.second);
     }
+
+    makePushPermission(): void {
+        Push.create("Hello world!", {
+            body: "How's it hangin'?",
+            // icon: 'icon.png',
+            timeout: 4000,
+            // onClick: function () {
+            //     window.focus();
+            //     // this.close();
+            // }
+        });
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    }
+
 }
