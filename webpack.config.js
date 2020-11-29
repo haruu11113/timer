@@ -9,7 +9,7 @@ module.exports = {
     entry: './ts/index.ts',
 
     output: {
-        path: path.join(__dirname, "dist"),
+        path: path.join(__dirname, "public/dist"),
         filename: "index.js"
     },
 
